@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 
 export default function CharacterPortrait({ characterImg }) {
-  const thumbnailUrl = characterImg?.thumbnailUrl || "https://via.placeholder.com/150";
+  const thumbnailUrl = characterImg.thumbnailUrl || "https://via.placeholder.com/150";
   const fileInputRef = useRef(null);
   const [imageSrc, setImageSrc] = useState(thumbnailUrl);
 
@@ -10,7 +10,7 @@ export default function CharacterPortrait({ characterImg }) {
     if (file) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        setImageSrc(e.target.result);
+        if(e.target) setImageSrc(e.target.result);
       };
       reader.readAsDataURL(file);
     }

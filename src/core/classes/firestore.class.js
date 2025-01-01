@@ -1,31 +1,79 @@
-import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, getDoc } from "firebase/firestore";
-import { firestore } from "../data/firebase.connection";
+import { EntityModel } from "../classes/entity-model.class";
+import { collection,getDocs,addDoc,updateDoc,deleteDoc,doc,getDoc,query,where,DocumentSnapshot,QuerySnapshot,DocumentReference,} from "firebase/firestore";
+import { firestore } from "../config/firebase.connection";
+
+const _firestore = firestore;
 
 export class FirestoreAPI {
-  _firestore = firestore;
-
+  /**
+   * Creates a new document in Firestore.
+   * @param {EntityModel} model - Entity model class
+   * @param {Object} dto - Data Transfer Object for the entity
+   * @returns {Promise<DocumentReference>}
+   */
   static async create(model, dto) {
-    const collectionRef = collection(this._firestore, model.getModelName());
+    if (!(model instanceof EntityModel)) {
+      throw new Error("model must be an instance of EntityModel");
+    }
+    const collectionRef = collection(_firestore, model.getModelName());
     return await addDoc(collectionRef, dto);
   }
 
+  /**
+   * Updates a document in Firestore.
+   * @param {EntityModel} model - Entity model class
+   * @param {string} id - Document ID
+   * @param {Object} dto - Data Transfer Object for the update
+   * @returns {Promise<void>}
+   */
   static async update(model, id, dto) {
-    const docRef = doc(this._firestore, `${model.getModelName()}/${id}`);
+    if (!(model instanceof EntityModel)) {
+      throw new Error("model must be an instance of EntityModel");
+    }
+    const docRef = doc(_firestore, `${model.getModelName()}/${id}`);
     return await updateDoc(docRef, dto);
   }
 
+  /**
+   * Finds a single document by ID.
+   * @param {EntityModel} model - Entity model class
+   * @param {string} id - Document ID
+   * @returns {Promise<DocumentSnapshot>}
+   */
   static async findOne(model, id) {
-    const docRef = doc(this._firestore, `${model.getModelName()}/${id}`);
+    if (!(model instanceof EntityModel)) {
+      throw new Error("model must be an instance of EntityModel");
+    }
+    const docRef = doc(_firestore, `${model.getModelName()}/${id}`);
     return await getDoc(docRef);
   }
 
-  static async findAll(model) {
-    const collectionRef = collection(this._firestore, model.getModelName());
-    return await getDocs(collectionRef, { idField: "id" });
+  /**
+   * Finds all documents by user ID.
+   * @param {EntityModel} model - Entity model class
+   * @param {string} userId - User ID
+   * @returns {Promise<QuerySnapshot>}
+   */
+  static async findAllByUserId(model, userId) {
+    if (!(model instanceof EntityModel)) {
+      throw new Error("model must be an instance of EntityModel");
+    }
+    const collectionRef = collection(_firestore, model.getModelName());
+    const findAllQuery = query(collectionRef, where("userId", "==", userId));
+    return await getDocs(findAllQuery);
   }
 
+  /**
+   * Deletes a document by ID.
+   * @param {EntityModel} model - Entity model class
+   * @param {string} id - Document ID
+   * @returns {Promise<void>}
+   */
   static async remove(model, id) {
-    const docRef = doc(this._firestore, `${model.getModelName()}/${id}`);
+    if (!(model instanceof EntityModel)) {
+      throw new Error("model must be an instance of EntityModel");
+    }
+    const docRef = doc(_firestore, `${model.getModelName()}/${id}`);
     return await deleteDoc(docRef);
   }
 }

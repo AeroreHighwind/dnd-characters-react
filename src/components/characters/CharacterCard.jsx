@@ -1,7 +1,7 @@
 import React from 'react';
 import CharacterPortrait from './CharacterPortrait';
 import CharacterStats from './CharacterStats';
-import { CharacterCardTypes } from "../../core/types/CharacterCardTypes";
+import { CharacterType } from "../../core/types/CharacterCardTypes";
 
 export default function CharacterCard({ character }) {
   return (
@@ -15,4 +15,5 @@ export default function CharacterCard({ character }) {
   );
 }
 
-CharacterCard.propTypes = CharacterCardTypes;
+CharacterCard.propTypes = CharacterType;
+
