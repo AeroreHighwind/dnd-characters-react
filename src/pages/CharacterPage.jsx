@@ -7,34 +7,20 @@ export default function CharacterPage() {
   // @ts-ignore
   const [characters, setCharacters] = useState([]);
   useEffect(() => {
-    const newChar = new CharacterModel()
+    const model = new CharacterModel()
     
-    newChar.class = 'Vanguard'
-    newChar.imgUrl = 'https://iopwiki.com/images/9/9b/Ullrid_S.png'
-    newChar.lvl = 17;
-    newChar.name = 'Ullrid'
-    newChar.stats.str = 10
-    newChar.stats.dex = 10
-    newChar.stats.con = 10
-    newChar.stats.int = 10
-    newChar.stats.wis = 10
-    newChar.stats.cha = 10
-    newChar.ownerId = 'TEST'
-    
-    const uploadCharacter = async ()=>{
-      await FirestoreAPI.create(newChar)
-    }
     const retrieveCharacters = async ()=>{
-      const fireCharacters = await FirestoreAPI.findAll(newChar)
+      const fireCharacters = await FirestoreAPI.findAll(model)
       if (fireCharacters) setCharacters(fireCharacters)
     }
 
-    // uploadCharacter()
+
     retrieveCharacters()
   }, []);
 
   return (
       <div>
+        <img src="https://drive.usercontent.google.com/download?id=1gGjmerWFxRxqgfCSadjNicZXsnaEoQ4g&authuser=0" alt="" srcSet="" />
         {characters.length ? (
           <ul className='flex flex-wrap flex-row max-w-screen-2xl m-auto gap-2 text-center'>
             {characters.map((character, index) => (

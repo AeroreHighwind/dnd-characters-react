@@ -4,9 +4,11 @@ import { Collection } from "../core/decorators/Collection.decorator";
 export class CharacterModel extends EntityModel {
   name = "";
   class = "";
+  race = "";
   lvl = 1;
   ownerId = "";
   imgUrl = "";
+  series = "";
   stats = {
     str: 0,
     dex: 0,

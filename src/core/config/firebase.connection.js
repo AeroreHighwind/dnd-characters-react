@@ -2,6 +2,7 @@
 // https://firebase.google.com/docs/web/setup#available-libraries
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
+import { getDatabase } from "firebase/database";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_APIKEY,
@@ -16,3 +17,4 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const firestore = getFirestore(app);
+export const realtimeDB = getDatabase(app);

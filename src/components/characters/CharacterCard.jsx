@@ -20,8 +20,9 @@ export default function CharacterCard({ character }) {
         />
     </div>
       {/* <CharacterPortrait imgUrl={character.imgUrl} /> */}
-      <div>
-      <h1 className='font-sans font-semibold'>Lvl: {character.lvl} / <span className='text-lg'>{character.class}</span></h1>
+      <div className='font-semibold'>
+      <h1 className='font-sans'>Lvl: {character.lvl} / <span className='text-lg'>{character.class}</span></h1>
+      <h2>Series: {character.series}</h2>
     </div>
     </div>
   );
