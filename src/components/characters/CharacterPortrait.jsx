@@ -1,7 +1,8 @@
+import PropTypes from 'prop-types';
 import React, { useRef, useState } from 'react';
 
-export default function CharacterPortrait({ characterImg }) {
-  const thumbnailUrl = characterImg.thumbnailUrl || "https://via.placeholder.com/150";
+export default function CharacterPortrait({ imgUrl }) {
+  const thumbnailUrl = imgUrl || "https://via.placeholder.com/150";
   const fileInputRef = useRef(null);
   const [imageSrc, setImageSrc] = useState(thumbnailUrl);
 
@@ -17,6 +18,7 @@ export default function CharacterPortrait({ characterImg }) {
   }
 
   function handleImageClick() {
+    // @ts-ignore
     fileInputRef.current.click();
   }
 
@@ -32,6 +34,7 @@ export default function CharacterPortrait({ characterImg }) {
           src={imageSrc}
           alt="Character Portrait"
           onError={(e) => {
+            // @ts-ignore
             e.target.src = "unknown.png";
           }}
         />
@@ -45,4 +48,7 @@ export default function CharacterPortrait({ characterImg }) {
       />
     </div>
   );
+}
+CharacterPortrait.propTypes = {
+  imgUrl: PropTypes.string
 }
