@@ -10,9 +10,9 @@ export default function CharacterPage() {
     const newChar = new CharacterModel()
     
     newChar.class = 'Vanguard'
-    newChar.imgUrl = 'https://iopwiki.com/images/a/a9/Makiatto_S.png'
+    newChar.imgUrl = 'https://iopwiki.com/images/9/9b/Ullrid_S.png'
     newChar.lvl = 17;
-    newChar.name = 'Makiatto'
+    newChar.name = 'Ullrid'
     newChar.stats.str = 10
     newChar.stats.dex = 10
     newChar.stats.con = 10
@@ -36,7 +36,6 @@ export default function CharacterPage() {
   }, []);
 
   return (
-
       <div>
         {characters.length ? (
           <ul className='flex flex-wrap flex-row max-w-screen-2xl m-auto gap-2 text-center'>
