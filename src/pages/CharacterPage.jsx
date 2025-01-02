@@ -22,8 +22,6 @@ export default function CharacterPage() {
     newChar.ownerId = 'TEST'
     
     const uploadCharacter = async ()=>{
-      console.log("method executed");
-      
       await FirestoreAPI.create(newChar)
     }
     const retrieveCharacters = async ()=>{
