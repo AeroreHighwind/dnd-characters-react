@@ -1,26 +1,38 @@
 import React, { useEffect, useState } from 'react';
 import  CharacterCard  from "../components/characters/CharacterCard";
-import { HttpClient } from "../core/classes/http-client.class";
 import { CharacterModel } from '../models/Character.model';
+import { FirestoreAPI } from "../core/classes/firestore.class";
 
 export default function CharacterPage() {
   // @ts-ignore
   const [characters, setCharacters] = useState([]);
-
   useEffect(() => {
     const newChar = new CharacterModel()
+    
     newChar.class = 'Vanguard'
     newChar.imgUrl = 'https://iopwiki.com/images/a/a9/Makiatto_S.png'
     newChar.lvl = 17;
     newChar.name = 'Makiatto'
-    newChar.stats.str = 1
-    newChar.stats.dex = 1
-    newChar.stats.con = 1
-    newChar.stats.int = 1
-    newChar.stats.wis = 1
-    newChar.stats.cha = 1
+    newChar.stats.str = 10
+    newChar.stats.dex = 10
+    newChar.stats.con = 10
+    newChar.stats.int = 10
+    newChar.stats.wis = 10
+    newChar.stats.cha = 10
     newChar.ownerId = 'TEST'
-    setCharacters([newChar]);
+    
+    const uploadCharacter = async ()=>{
+      console.log("method executed");
+      
+      await FirestoreAPI.create(newChar)
+    }
+    const retrieveCharacters = async ()=>{
+      const fireCharacters = await FirestoreAPI.findAll(newChar)
+      if (fireCharacters) setCharacters(fireCharacters)
+    }
+
+    // uploadCharacter()
+    retrieveCharacters()
   }, []);
 
   return (

@@ -1,5 +1,18 @@
 import { EntityModel } from "../classes/entity-model.class";
-import { collection,getDocs,addDoc,updateDoc,deleteDoc,doc,getDoc,query,where,DocumentSnapshot,QuerySnapshot,DocumentReference,} from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  doc,
+  getDoc,
+  query,
+  where,
+  DocumentSnapshot,
+  QuerySnapshot,
+  DocumentReference,
+} from "firebase/firestore";
 import { firestore } from "../config/firebase.connection";
 
 const _firestore = firestore;
@@ -8,15 +21,15 @@ export class FirestoreAPI {
   /**
    * Creates a new document in Firestore.
    * @param {EntityModel} model - Entity model class
-   * @param {Object} dto - Data Transfer Object for the entity
    * @returns {Promise<DocumentReference>}
    */
-  static async create(model, dto) {
+  static async create(model) {
     if (!(model instanceof EntityModel)) {
       throw new Error("model must be an instance of EntityModel");
     }
     const collectionRef = collection(_firestore, model.getModelName());
-    return await addDoc(collectionRef, dto);
+    const { collectionName, ...rest } = model;
+    return await addDoc(collectionRef, rest);
   }
 
   /**
@@ -61,6 +74,26 @@ export class FirestoreAPI {
     const collectionRef = collection(_firestore, model.getModelName());
     const findAllQuery = query(collectionRef, where("userId", "==", userId));
     return await getDocs(findAllQuery);
+  }
+
+  /**
+   * Finds all documents in collection
+   * @param {EntityModel} model - Entity model class
+   * @returns {Promise<any[]>}
+   */
+  static async findAll(model) {
+    if (!(model instanceof EntityModel)) {
+      throw new Error("model must be an instance of EntityModel");
+    }
+    const results = [];
+    const collectionRef = collection(_firestore, model.getModelName());
+
+    const snapshot = await getDocs(collectionRef);
+    snapshot.forEach((doc) => {
+      const mappedDoc = { id: doc.id, ...doc.data() };
+      results.push(mappedDoc);
+    });
+    return results;
   }
 
   /**

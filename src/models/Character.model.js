@@ -7,19 +7,17 @@ export class CharacterModel extends EntityModel {
   lvl = 1;
   ownerId = "";
   imgUrl = "";
-  stats = new CharacterStats();
+  stats = {
+    str: 0,
+    dex: 0,
+    con: 0,
+    int: 0,
+    wis: 0,
+    cha: 0,
+  };
 
   constructor() {
     super();
     Collection("characters")(this);
   }
-}
-
-export class CharacterStats {
-  str = 0;
-  dex = 0;
-  con = 0;
-  int = 0;
-  wis = 0;
-  cha = 0;
 }
