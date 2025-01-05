@@ -1,7 +1,11 @@
 import { EntityModel } from "../core/classes/entity-model.class";
-import { Collection } from "../core/decorators/Collection.decorator";
 
 export class CharacterModel extends EntityModel {
+  /**
+   * @readonly
+   */
+  static collectionName = "characters";
+
   name = "";
   class = "";
   race = "";
@@ -20,6 +24,5 @@ export class CharacterModel extends EntityModel {
 
   constructor() {
     super();
-    Collection("characters")(this);
   }
 }

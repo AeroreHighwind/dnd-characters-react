@@ -7,7 +7,7 @@ export default function CharacterPage() {
   // @ts-ignore
   const [characters, setCharacters] = useState([]);
   useEffect(() => {
-    const model = new CharacterModel()
+    const model = CharacterModel
     
     const retrieveCharacters = async ()=>{
       const fireCharacters = await FirestoreAPI.findAll(model)

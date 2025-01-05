@@ -1,27 +1,17 @@
-/**
- * Base class representing an entity mappable to a Firestore collection.
- */
 export class EntityModel {
-  /**
-   * @readonly
-   * Name of the firestore collection this entity belongs to, will be used to perform CRUD operations.
-   * Subclasses or decorators should assign this value, it shall never be reassigned.
-   */
-  collectionName;
-  /**
-   * Returns the collection name set by the Collection function.
-   * @returns {string} The Firestore collection name.
-   * @throws {Error} If the collection name is not defined.
-   */
+  static collectionName;
 
-  /**
-   * Returns the collection name set by the Collection function.
-   * @returns {string} The Firestore collection name.
-   * @throws {Error} If the collection name is not defined.
-   */
-  getModelName() {
-    if (!this.collectionName)
-      throw new Error(`Modelname must be defined in children classes`);
+  static getCollectionName() {
+    if (!this.collectionName) {
+      throw new Error(
+        `Collection name must be defined in the subclass: ${this.name}`
+      );
+    }
     return this.collectionName;
+  }
+
+  getCollectionName() {
+    // Call the static method from the constructor of the instance
+    return this.constructor.getCollectionName();
   }
 }

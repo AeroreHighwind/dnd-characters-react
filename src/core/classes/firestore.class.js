@@ -14,6 +14,7 @@ import {
   DocumentReference,
 } from "firebase/firestore";
 import { firestore } from "../config/firebase.connection";
+import { isSubclassOf } from "../utils/isSubclassOf";
 
 const _firestore = firestore;
 
@@ -24,11 +25,11 @@ export class FirestoreAPI {
    * @returns {Promise<DocumentReference>}
    */
   static async create(model) {
-    if (!(model instanceof EntityModel)) {
-      throw new Error("model must be an instance of EntityModel");
+    if (!isSubclassOf(model, EntityModel)) {
+      throw new Error("model must inherit from EntityModel");
     }
-    const collectionRef = collection(_firestore, model.getModelName());
-    const { collectionName, ...rest } = model;
+    const collectionRef = collection(_firestore, model.getCollectionName());
+    const { ...rest } = model;
     return await addDoc(collectionRef, rest);
   }
 
@@ -40,10 +41,10 @@ export class FirestoreAPI {
    * @returns {Promise<void>}
    */
   static async update(model, id, dto) {
-    if (!(model instanceof EntityModel)) {
-      throw new Error("model must be an instance of EntityModel");
+    if (!isSubclassOf(model, EntityModel)) {
+      throw new Error("model must inherit from EntityModel");
     }
-    const docRef = doc(_firestore, `${model.getModelName()}/${id}`);
+    const docRef = doc(_firestore, `${model.getCollectionName()}/${id}`);
     return await updateDoc(docRef, dto);
   }
 
@@ -54,10 +55,10 @@ export class FirestoreAPI {
    * @returns {Promise<DocumentSnapshot>}
    */
   static async findOne(model, id) {
-    if (!(model instanceof EntityModel)) {
-      throw new Error("model must be an instance of EntityModel");
+    if (!isSubclassOf(model, EntityModel)) {
+      throw new Error("model must inherit from EntityModel");
     }
-    const docRef = doc(_firestore, `${model.getModelName()}/${id}`);
+    const docRef = doc(_firestore, `${model.getCollectionName()}/${id}`);
     return await getDoc(docRef);
   }
 
@@ -68,10 +69,10 @@ export class FirestoreAPI {
    * @returns {Promise<QuerySnapshot>}
    */
   static async findAllByUserId(model, userId) {
-    if (!(model instanceof EntityModel)) {
-      throw new Error("model must be an instance of EntityModel");
+    if (!isSubclassOf(model, EntityModel)) {
+      throw new Error("model must inherit from EntityModel");
     }
-    const collectionRef = collection(_firestore, model.getModelName());
+    const collectionRef = collection(_firestore, model.getCollectionName());
     const findAllQuery = query(collectionRef, where("userId", "==", userId));
     return await getDocs(findAllQuery);
   }
@@ -82,11 +83,11 @@ export class FirestoreAPI {
    * @returns {Promise<any[]>}
    */
   static async findAll(model) {
-    if (!(model instanceof EntityModel)) {
-      throw new Error("model must be an instance of EntityModel");
+    if (!isSubclassOf(model, EntityModel)) {
+      throw new Error("model must inherit from EntityModel");
     }
     const results = [];
-    const collectionRef = collection(_firestore, model.getModelName());
+    const collectionRef = collection(_firestore, model.getCollectionName());
 
     const snapshot = await getDocs(collectionRef);
     snapshot.forEach((doc) => {
@@ -103,10 +104,10 @@ export class FirestoreAPI {
    * @returns {Promise<void>}
    */
   static async remove(model, id) {
-    if (!(model instanceof EntityModel)) {
-      throw new Error("model must be an instance of EntityModel");
+    if (!isSubclassOf(model, EntityModel)) {
+      throw new Error("model must inherit from EntityModel");
     }
-    const docRef = doc(_firestore, `${model.getModelName()}/${id}`);
+    const docRef = doc(_firestore, `${model.getCollectionName()}/${id}`);
     return await deleteDoc(docRef);
   }
 }
