@@ -1,4 +1,4 @@
-export class EntityModel {
+export class BaseModel {
   static collectionName;
 
   static getCollectionName() {

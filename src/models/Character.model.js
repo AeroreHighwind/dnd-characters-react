@@ -1,11 +1,10 @@
-import { EntityModel } from "../core/classes/entity-model.class";
+import { BaseModel } from "../core/classes/base-model.class";
 
-export class CharacterModel extends EntityModel {
+export class CharacterModel extends BaseModel {
   /**
    * @readonly
    */
   static collectionName = "characters";
-
   name = "";
   class = "";
   race = "";

@@ -4,7 +4,6 @@ import { CharacterModel } from '../models/Character.model';
 import { FirestoreAPI } from "../core/classes/firestore.class";
 
 export default function CharacterPage() {
-  // @ts-ignore
   const [characters, setCharacters] = useState([]);
   useEffect(() => {
     const model = CharacterModel
@@ -13,7 +12,6 @@ export default function CharacterPage() {
       const fireCharacters = await FirestoreAPI.findAll(model)
       if (fireCharacters) setCharacters(fireCharacters)
     }
-
 
     retrieveCharacters()
   }, []);
