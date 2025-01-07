@@ -12,6 +12,7 @@ export class BaseModel {
 
   getCollectionName() {
     // Call the static method from the constructor of the instance
+    // @ts-ignore
     return this.constructor.getCollectionName();
   }
 }

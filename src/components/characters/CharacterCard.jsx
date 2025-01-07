@@ -1,5 +1,4 @@
 import React from 'react';
-import CharacterPortrait from './CharacterPortrait';
 import { CharacterType } from "../../core/types/CharacterCardTypes";
 
 export default function CharacterCard({ character }) {
