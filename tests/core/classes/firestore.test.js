@@ -1,7 +1,5 @@
 import { BaseModel } from "../../../src/core/classes/base-model.class";
 import { FirestoreAPI } from "../../../src/core/classes/firestore.class";
-import { addDoc, collection, getDocs, deleteDoc } from "firebase/firestore";
-import { firestore } from "../../../src/core/config/firebase.connection";
 
 jest.mock("../../../src/core/config/firebase.connection", () => ({
   firestore: {}, // Mock Firestore instance
@@ -25,16 +23,36 @@ class MockModel extends BaseModel {
   name = "Test Name";
 }
 
+class CollectionlessModel extends BaseModel {}
+
 describe("FirestoreAPI create method", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  test("Create method should fail if the entity passed is an object of class BaseModel", async () => {
-    const erroneousModel = new BaseModel(); // Not an instance of BaseModel
-
-    await expect(FirestoreAPI.create(erroneousModel)).rejects.toThrow(
+  test("Should fail if the entity passed is a direct instance of BaseModel", async () => {
+    const baseModel = new BaseModel();
+    await expect(FirestoreAPI.create(baseModel)).rejects.toThrow(
       "Collection name must be defined in the subclass: BaseModel"
     );
+  });
+
+  test("Should fail if the children class of BaseModel does not have a static collectionName property", async () => {
+    const collectionless = new CollectionlessModel();
+    await expect(FirestoreAPI.create(collectionless)).rejects.toThrow(
+      `Collection name must be defined in the subclass: ${collectionless.constructor.name}`
+    );
+  });
+
+  test("Should get the reference to the collection if the entity passed is an instance of a class inheriteing from BaseModel", async () => {
+    const mockModel = new MockModel();
+    mockModel.getCollectionName();
+    await expect(FirestoreAPI.create(mockModel)).resolves.not.toBeNull();
+  });
+
+  test("Should pass if the entity passed is an instance of class BaseModel", async () => {
+    const mockModel = new MockModel();
+
+    await expect(FirestoreAPI.create(mockModel)).resolves.not.toBeNull();
   });
 });

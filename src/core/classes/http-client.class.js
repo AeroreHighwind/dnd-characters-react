@@ -1,6 +1,11 @@
 export class HttpClient {
   constructor(baseURL) {
     this.baseURL = baseURL;
+    if (!baseURL) {
+      throw new Error(
+        "The baseURL parameter is required to instantiate HttpClient."
+      );
+    }
   }
 
   // Helper method to handle fetch logic
