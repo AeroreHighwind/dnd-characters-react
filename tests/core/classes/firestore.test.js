@@ -2,8 +2,8 @@ import { BaseModel } from "../../../src/core/classes/base-model.class";
 import { FirestoreAPI } from "../../../src/core/classes/firestore.class";
 
 jest.mock("../../../src/core/config/firebase.connection", () => ({
-  firestore: {}, // Mock Firestore instance
-  realtimeDB: {}, // Mock Realtime Database instance if needed
+  firestore: {},
+  realtimeDB: {},
 }));
 
 jest.mock("firebase/firestore", () => ({
@@ -21,6 +21,7 @@ jest.mock("firebase/firestore", () => ({
 class MockModel extends BaseModel {
   static collectionName = "testCollection";
   name = "Test Name";
+  id = "!@#s2327664AS[ZCOXP";
 }
 
 class CollectionlessModel extends BaseModel {}
@@ -54,5 +55,22 @@ describe("FirestoreAPI create method", () => {
     const mockModel = new MockModel();
 
     await expect(FirestoreAPI.create(mockModel)).resolves.not.toBeNull();
+  });
+});
+
+describe("firestore update method tests", () => {
+  let mockModel;
+
+  beforeEach(() => {
+    mockModel = new MockModel();
+    jest.clearAllMocks();
+  });
+
+  test("should throw an error if the model is not an instance of a children class from BaseModel", async () => {
+    const collectionlessModel = new CollectionlessModel();
+    await expect(
+      // @ts-ignore
+      FirestoreAPI.update(collectionlessModel, undefined)
+    ).rejects.toThrow("id of entity to update is required");
   });
 });

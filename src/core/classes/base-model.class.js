@@ -1,5 +1,6 @@
 export class BaseModel {
   static collectionName;
+  id;
 
   static getCollectionName() {
     if (!this.collectionName) {

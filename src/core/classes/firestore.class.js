@@ -36,16 +36,18 @@ export class FirestoreAPI {
   /**
    * Updates a document in Firestore.
    * @param {BaseModel} model - Entity model class
-   * @param {string} id - Document ID
-   * @param {Object} dto - Data Transfer Object for the update
+   * @param {string} elementId - Document ID
    * @returns {Promise<void>}
    */
-  static async update(model, id, dto) {
+  static async update(model, elementId) {
     if (!(model instanceof BaseModel)) {
       throw new Error("model must inherit from BaseModel");
     }
-    const docRef = doc(_firestore, `${model.getCollectionName()}/${id}`);
-    return await updateDoc(docRef, dto);
+    if (!elementId) throw new Error("id of entity to update is required");
+
+    const { id, getCollectionName, ...rest } = model;
+    const docRef = doc(_firestore, `${model.getCollectionName()}/${elementId}`);
+    return await updateDoc(docRef, rest);
   }
 
   /**
