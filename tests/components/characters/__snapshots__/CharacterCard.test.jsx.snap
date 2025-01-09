@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing character card component should match with snapshot 1`] = `
+<div>
+  <div
+    class="flex flex-col justify-center overflow-hidden max-w-md"
+  >
+    <p
+      class="text-lg font-bold overflow-hidden text-ellipsis whitespace-nowrap"
+    >
+      Test Character
+    </p>
+    <div
+      class="flex bg-gray-700 h-52 w-52 text-slate-950 justify-center items-center"
+    >
+      <img
+        alt="Character Portrait"
+        class="w-full h-full"
+        src="mockedurl.test.com"
+      />
+    </div>
+    <div
+      class="font-semibold"
+    >
+      <h1
+        class="font-sans"
+      >
+        Lvl: 
+        10
+         / 
+        <span
+          class="text-lg"
+        >
+          Tester
+        </span>
+      </h1>
+      <h2>
+        Series: 
+        unit testing
+      </h2>
+    </div>
+  </div>
+</div>
+`;
