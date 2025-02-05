@@ -10,12 +10,12 @@ export default function CharacterCard({ character }) {
       <div className='flex bg-gray-700 h-52 w-52 text-slate-950 justify-center items-center'>
         <img
           className='w-full h-full'
-          src={character.imgUrl}
+          src={character.imgUrl || "unknown.png"}
           alt="Character Portrait"
-          onError={(e) => {
-            // @ts-ignore
-            e.target.src = "unknown.png";
-          }}
+          // onError={(e) => {
+          //   // @ts-ignore
+          //   e.target.src = "unknown.png";
+          // }}
         />
     </div>
       {/* <CharacterPortrait imgUrl={character.imgUrl} /> */}

@@ -1,5 +1,7 @@
 export class HttpClient {
-  constructor(baseURL) {
+  private readonly baseURL: string;
+
+  constructor (baseURL: string) {
     this.baseURL = baseURL;
     if (!baseURL) {
       throw new Error(
@@ -9,14 +11,14 @@ export class HttpClient {
   }
 
   // Helper method to handle fetch logic
-  async request(method, endpoint, body = null, customHeaders = {}) {
+  async request(method: RequestMethod, endpoint: string, body = null, customHeaders = {}) {
     const url = `${this.baseURL}/${endpoint}`;
     const headers = {
       "Content-Type": "application/json",
       ...customHeaders,
     };
 
-    const options = {
+    const options: any = {
       method,
       headers,
     };
@@ -38,19 +40,21 @@ export class HttpClient {
   }
 
   // CRUD Operations
-  async get(endpoint, customHeaders = {}) {
+  async get(endpoint: string, customHeaders = {}) {
     return this.request("GET", endpoint, null, customHeaders);
   }
 
-  async post(endpoint, body, customHeaders = {}) {
+  async post(endpoint: string, body: any, customHeaders = {}) {
     return this.request("POST", endpoint, body, customHeaders);
   }
 
-  async put(endpoint, body, customHeaders = {}) {
+  async put(endpoint: string, body: any, customHeaders = {}) {
     return this.request("PUT", endpoint, body, customHeaders);
   }
 
-  async delete(endpoint, customHeaders = {}) {
+  async delete(endpoint: string, customHeaders = {}) {
     return this.request("DELETE", endpoint, null, customHeaders);
   }
 }
+
+declare type RequestMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';

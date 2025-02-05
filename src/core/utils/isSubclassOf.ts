@@ -1,4 +1,4 @@
-export function isSubclassOf(subclass, superclass) {
+export function isSubclassOf(subclass: any, superclass: any) {
   let proto = Object.getPrototypeOf(subclass);
   while (proto) {
     if (proto === superclass) return true;
