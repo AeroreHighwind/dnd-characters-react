@@ -1,17 +1,17 @@
 import PropTypes from 'prop-types';
 import { useRef, useState } from 'react';
 
-export default function CharacterPortrait({ imgUrl }) {
+export default function CharacterPortrait({ imgUrl }: {readonly imgUrl:string}) {
   const thumbnailUrl = imgUrl || "https://via.placeholder.com/150";
   const fileInputRef = useRef(null);
   const [imageSrc, setImageSrc] = useState(thumbnailUrl);
 
-  function uploadFile(event) {
+  function uploadFile(event:any) {
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        if(e.target) setImageSrc(e.target.result);
+        if(e.target) setImageSrc(e?.target?.result);
       };
       reader.readAsDataURL(file);
     }

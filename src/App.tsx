@@ -1,6 +1,6 @@
 
 import CharacterPage from "./pages/CharacterPage"
-import './index.css'
+// import './index.css'
 function App() {
   return (
     <main>

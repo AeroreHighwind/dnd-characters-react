@@ -1,10 +1,7 @@
 import { BaseModel } from "../core/classes/base-model.class";
 
 export class CharacterModel extends BaseModel {
-  /**
-   * @readonly
-   */
-  static collectionName = "characters";
+  static readonly collectionName = "characters";
   name = "";
   class = "";
   race = "";
@@ -21,7 +18,7 @@ export class CharacterModel extends BaseModel {
     cha: 0,
   };
 
-  constructor() {
+  constructor () {
     super();
   }
 }

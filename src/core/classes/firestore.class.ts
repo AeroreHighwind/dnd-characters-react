@@ -1,20 +1,19 @@
-import { BaseModel } from "../classes/base-model.class";
+import { firestore } from "../config/firebase.connection";
+import { isSubclassOf } from "../utils/isSubclassOf";
+import { BaseModel } from "./base-model.class";
 import {
   addDoc,
   collection,
   deleteDoc,
   doc,
-  DocumentReference,
-  DocumentSnapshot,
   getDoc,
   getDocs,
   query,
-  QuerySnapshot,
   updateDoc,
   where,
 } from "firebase/firestore";
-import { firestore } from "../config/firebase.connection";
-import { isSubclassOf } from "../utils/isSubclassOf";
+
+
 
 const _firestore = firestore;
 
@@ -24,7 +23,7 @@ export class FirestoreAPI {
    * @param {BaseModel} model - Entity model class
    * @returns {Promise<DocumentReference>}
    */
-  static async create(model) {
+  static async create(model: BaseModel) {
     if (!(model instanceof BaseModel)) {
       throw new Error("model must be an instance of BaseModel");
     }
@@ -39,7 +38,7 @@ export class FirestoreAPI {
    * @param {string} elementId - Document ID
    * @returns {Promise<void>}
    */
-  static async update(model, elementId) {
+  static async update(model: BaseModel, elementId: string) {
     if (!(model instanceof BaseModel)) {
       throw new Error("model must inherit from BaseModel");
     }
@@ -56,7 +55,7 @@ export class FirestoreAPI {
    * @param {string} id - Document ID
    * @returns {Promise<DocumentSnapshot>}
    */
-  static async findOne(model, id) {
+  static async findOne(model: BaseModel, id: string) {
     if (!isSubclassOf(model, BaseModel)) {
       throw new Error("model must inherit from BaseModel");
     }
@@ -70,7 +69,7 @@ export class FirestoreAPI {
    * @param {string} userId - User ID
    * @returns {Promise<QuerySnapshot>}
    */
-  static async findAllByUserId(model, userId) {
+  static async findAllByUserId(model: BaseModel, userId: string) {
     if (!isSubclassOf(model, BaseModel)) {
       throw new Error("model must inherit from BaseModel");
     }
@@ -84,11 +83,11 @@ export class FirestoreAPI {
    * @param {BaseModel} model - Entity model class
    * @returns {Promise<any[]>}
    */
-  static async findAll(model) {
+  static async findAll(model: BaseModel) {
     if (!isSubclassOf(model, BaseModel)) {
       throw new Error("model must inherit from BaseModel");
     }
-    const results = [];
+    const results: any[] = [];
     const collectionRef = collection(_firestore, model.getCollectionName());
 
     const snapshot = await getDocs(collectionRef);
@@ -105,7 +104,7 @@ export class FirestoreAPI {
    * @param {string} id - Document ID
    * @returns {Promise<void>}
    */
-  static async remove(model, id) {
+  static async remove(model: BaseModel, id: string) {
     if (!isSubclassOf(model, BaseModel)) {
       throw new Error("model must inherit from BaseModel");
     }

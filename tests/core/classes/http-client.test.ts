@@ -11,7 +11,7 @@ describe("HttpClient instantiation tests", () => {
 
   test("should create an instance", () => {
     const httpClient = new HttpClient(baseURL);
-    expect(httpClient.baseURL).toBeTruthy();
+    expect((httpClient as any).baseURL).toBeTruthy();
   });
 });
 

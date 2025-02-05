@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import  CharacterCard  from "../components/characters/CharacterCard";
 import { CharacterModel } from '../models/Character.model';
 import { FirestoreAPI } from "../core/classes/firestore.class";
